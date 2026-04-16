@@ -9,19 +9,19 @@ from tqdm import tqdm
 import torch
 import numpy as np
 
-# # ===================== 全局修复：兼容新版 numpy =====================
-# # 修复 np.int 报错，让旧代码能正常运行
-# np.int = int
-# np.bool = bool
-# np.float = float
-#
-# # 屏蔽所有无关警告
-# import warnings
-#
-# warnings.filterwarnings("ignore")
-#
-# # 修复 PyTorch 2.6+ 模型加载报错
-# torch.serialization.add_safe_globals([])
+# ===================== 全局修复：兼容新版 numpy =====================
+# 修复 np.int 报错，让旧代码能正常运行
+np.int = int
+np.bool = bool
+np.float = float
+
+# 屏蔽所有无关警告
+import warnings
+
+warnings.filterwarnings("ignore")
+
+# 修复 PyTorch 2.6+ 模型加载报错
+torch.serialization.add_safe_globals([])
 
 from SAN.san_api import SanLandmarkDetector
 
