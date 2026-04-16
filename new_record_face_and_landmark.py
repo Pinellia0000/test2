@@ -7,21 +7,26 @@ import cv2
 from tqdm import tqdm
 import torch
 
-# -------------------------
-# 🔥 关键：先导入 scipy 相关！再导入 numpy！
-# -------------------------
-from scipy.ndimage.interpolation import zoom
-
+# ==========================
+# 🔥 终极修复：先补全 np.int / np.float / np.bool
+# ==========================
 import numpy as np
+np.int = int
+np.float = float
+np.bool = bool
+np.complex = complex
+
+# 先补全，再导入 scipy 和 SAN
+from scipy.ndimage.interpolation import zoom
 import yaml
 
-# 屏蔽警告
+# 屏蔽所有警告
 import warnings
 warnings.filterwarnings("ignore")
 
-torch.serialization.add_safe_globals([])
+torch.serialization.add_safe_globals([type, type(None)])
 
-# 最后导入 SAN
+# 最后导入模型
 from SAN.san_api import SanLandmarkDetector
 
 # ==================================================================
