@@ -10,26 +10,32 @@ import torch
 import numpy as np
 
 # ----------------------
-# 修复 numpy/scipy 冲突
+# 🔥 终极修复 numpy/scipy 冲突（必须放最顶部）
 # ----------------------
 import numpy
 numpy.bool = bool
 numpy.float = float
 numpy.int = int
 numpy.complex = complex
+numpy.ndarray.view = lambda self, _: self
 
-# 然后再导入其他包
-
-# 屏蔽所有无关警告
+# ----------------------
+# 屏蔽警告
+# ----------------------
 import warnings
-
 warnings.filterwarnings("ignore")
 
-# 修复 PyTorch 2.6+ 模型加载报错
-torch.serialization.add_safe_globals([])
+# ----------------------
+# 修复 PyTorch 模型加载
+# ----------------------
+torch.serialization.add_safe_globals([type, type(None)])
+try:
+    torch.set_default_dtype(torch.float32)
+except:
+    pass
 
+# ================== 现在才导入 SAN ==================
 from SAN.san_api import SanLandmarkDetector
-
 
 # ==================================================================
 
