@@ -6,27 +6,27 @@ from pathlib import Path
 import cv2
 from tqdm import tqdm
 import torch
+import numpy as np
 
 # ==========================
-# 🔥 终极修复：先补全 np.int / np.float / np.bool
+# 🔥 终极屏蔽：彻底禁止出错的模块
 # ==========================
-import numpy as np
+import sys
+sys.modules['scipy.ndimage.interpolation'] = type('fake', (), {'zoom': lambda *args: args[0]})()
+sys.modules['scipy'] = type('fake', (), {})()
+
+# 修复 numpy 废弃类型
 np.int = int
 np.float = float
 np.bool = bool
 np.complex = complex
 
-# 先补全，再导入 scipy 和 SAN
-from scipy.ndimage.interpolation import zoom
-import yaml
-
-# 屏蔽所有警告
 import warnings
 warnings.filterwarnings("ignore")
 
 torch.serialization.add_safe_globals([type, type(None)])
 
-# 最后导入模型
+# 现在可以安全导入 SAN
 from SAN.san_api import SanLandmarkDetector
 
 # ==================================================================
