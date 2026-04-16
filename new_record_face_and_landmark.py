@@ -129,6 +129,6 @@ def record_face_and_landmarks(cropped_root_path):
 
 
 if __name__ == "__main__":
-    cropped_root_path = r'D:\MESMER\working\stuTest_MES\stuTest_retinaface'
+    cropped_root_path = '/kaggle/working/stuTest_retinaface'
     record_face_and_landmarks(cropped_root_path)
     print_directory_structure(cropped_root_path, directory_name='stuTest_retinaface')
