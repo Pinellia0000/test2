@@ -3,38 +3,25 @@ import glob
 import csv
 from pathlib import Path
 
-import yaml
 import cv2
 from tqdm import tqdm
 import torch
+
+# -------------------------
+# 🔥 关键：先导入 scipy 相关！再导入 numpy！
+# -------------------------
+from scipy.ndimage.interpolation import zoom
+
 import numpy as np
+import yaml
 
-# ----------------------
-# 🔥 终极修复 numpy/scipy 冲突（必须放最顶部）
-# ----------------------
-import numpy
-numpy.bool = bool
-numpy.float = float
-numpy.int = int
-numpy.complex = complex
-numpy.ndarray.view = lambda self, _: self
-
-# ----------------------
 # 屏蔽警告
-# ----------------------
 import warnings
 warnings.filterwarnings("ignore")
 
-# ----------------------
-# 修复 PyTorch 模型加载
-# ----------------------
-torch.serialization.add_safe_globals([type, type(None)])
-try:
-    torch.set_default_dtype(torch.float32)
-except:
-    pass
+torch.serialization.add_safe_globals([])
 
-# ================== 现在才导入 SAN ==================
+# 最后导入 SAN
 from SAN.san_api import SanLandmarkDetector
 
 # ==================================================================
